@@ -97,34 +97,51 @@
 function antiShake(fn, delay) {
     let timer = null
     return function() {
-        let rgs = arguments, self = this
         timer && clearTimeout(timer)
         timer = setTimeout(() => {
-            fn.apply(self, args)
+            fn()
         }, delay)
     }
 }
-window.onscroll = antiShake(function() {
-    let scrollTop = document.body.scrollTop || document.documentElement.scrollTop
+window.onscroll = function() {
+    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop
     console.log('滚动位置：' + scrollTop)
-}, 1000)
+}
 // 效果：滚动停止1s后打印滚动位置
 
 // 函数节流：js方法被触发后，需要等待一段间隔时间后才能再次被触发，间隔时间内触发是无效的，即减少会连续被触发的事件的触发频率
 function throttle(fn, delay) {
     let timePoint = 0
     return function() {
-        let timeNow = Date.now(), args = arguments, self = this
+        let timeNow = Date.now()
         if (timeNow - timePoint > delay) {
-            fn.apply(self, args)
+            fn()
             timePoint = timeNow
         }
     }
 }
 window.onscroll = throttle(function() {
-    let scrollTop = document.body.scrollTop || document.documentElement.scrollTop
+    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop
     console.log('滚动位置：' + scrollTop)
 }, 1000)
 // 效果：滚送过程中每过1s，打印一次滚动位置
 
 
+ /*********
+ *  ajax  *
+ **********/
+function req(method, url) {
+    let request
+    if (window.XMLHttpRequest) {
+        request = new XMLHttpRequest()
+    } else {
+        request = new ActiveXObject('Microsoft.XMLHTTP')
+    }
+    request.onreadystatechange = () => {
+        if (request.readyState == 4 && request.status == 200) {
+            return request.responseText
+        }
+    }
+    request.open(method, url, true)
+    request.send()
+}
