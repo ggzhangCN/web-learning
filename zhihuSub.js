@@ -128,7 +128,7 @@ window.onscroll = throttle(function() {
 
 
  /*********
- *  ajax  *
+ *  ajax请求  *
  **********/
 function req(method, url) {
     let request
