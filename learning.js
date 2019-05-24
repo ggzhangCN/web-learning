@@ -21,6 +21,8 @@ git branch -D dev // 删除本地分支
 // 代码回滚
 git log // 查看之前的代码提交
 git reset --hard commit-id // 回滚到相应commit-id的代码提交状态
+git reset --hard HEAD^ // 回滚到上一个版本
+git reset --hard HEAD~100 // 回滚到前100个版本
 
 // 解决pull引起的冲突
 git stash // 暂存本地的所有修改
